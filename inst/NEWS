@@ -1,0 +1,200 @@
+2.0.0
+    o change default color palette to generic: get[Color|Shape|Linetype]PalettePatientProfile
+    o fix in case bookmarkVar is a factor
+    o new options to set color/shape palette globally
+    o figure dir not created if exportFigures is FALSE on Windows
+    o no export of getPathTemplate
+1.5.0
+    o add unit tests
+    o no export of subjectProfileTheme
+    o subjectProfileTextPlot:
+      - fix ordering in case paramNameVar is a factor
+      - param value lab is used even if not table
+      - table output: 
+        - records sorted based on value var (especially for factor)
+        - fix in case only one param value var is specified
+    o subjectProfileEventPlot/subjectProfileLinePlot/subjectProfileIntervalPlot:
+      - records sorted based on levels of param var if factor
+      - missing values in paramVar or paramNameVar are not filtered
+      - extract number of lines legend from plot instead of data for simplicity
+    o subjectProfileEventPlot:
+      - fix when paramVarLab not specified for all vars
+      - x lab set to time lab by default
+    o subjectProfileEvent/subjectProfileLinePlot:
+      - shape lab set to color lab if color but not shape var specified
+      - fix in case shape and color vars are the same
+    o subjectProfileLinePlot:
+      - remove warning if ref var are missing
+    o subjectProfileIntervalPlot
+      - correct typo: 'data-by-subject' -> 'data-based'
+      - remove rangeSimilarStartEnd parameter (not used)
+      - add info on imputation in the caption
+   o subjectProfileCombine:
+        + attribute nLinesPlot -> metaData$nLines for consistency with subject plot fct
+    o getPageVar:
+      - fix when only one var is specified
+    o fct renaming:
+        - getNLinesYGgplot -> getNLinesSubjectProfile
+        - getXLimSubjectProfilePlots -> getTimeLimSubjectProfilePlots
+1.4.3
+    o change default palette for Windows support: u25C0 -> u25C4, u25B6 -> u25BA, u271A -> +, u2605 (star) -> u2666 (diamond), u25EF -> u25CB
+1.4.2
+    o subjectProfile[Interval|Event|Line]Plot: fix extraction size legend, add space between legend lines 
+1.4.1
+    o fix unit tests
+1.4.0
+    o add unit tests figures
+    o filterData/subjectProfile[X]Plot/createSubjectProfileReport: new subsetSample parameter
+1.3.0
+	  o change imports of color palette
+	  o createSubjectProfileReport: test if input list is empty
+1.2.0
+    o add vignette with standard patient profiles for SDTM data
+    o prepareSubjectProfile: fix in case trans and all missing values for interval plot
+    o subjectProfileLinePlot: fix for orientation of paramNameVar labels in ggplot2 >= 3.0.0
+    o fix bug when Rmd created after createSubjectProfileReport
+    o get[]ShapePalettePatientProfile: fix mix Unicode and ggplot2 palettes (asText = TRUE)
+1.1.0
+    o formatParamVar -> formatVarForPlotLabel/formatLongLabel: moved to utility pkg
+1.0.0
+    o change default time imputation in subjectProfileIntervalPlot (see 'timeImpType' parameter)
+    o getXLimSubjectProfilePlots: fixes for empty interval plot
+0.12.1
+    o formatParamVar: fix message issue grouping
+    o subjectProfileTextPlot: fix panel grid ggplot2 >= 3.3.0
+0.12.0
+    o checkTimeTrans: fix in case all cont module have the same transf
+    o subjectProfileLinePlot: shapeSize, paramNameVar can be multiple
+    o createSubjectProfileReport: exportBatchSize, subjectSort[] used also for order export of patient profiles, subjectSortDecreasing
+0.11.0
+    o subjectProfileLinePlot: yLimFrom new parameter
+0.10.0
+    o legend: fix when number of levels in aes var higher that represented levels
+    o subjectProfile[Interval|Line|Event]Plot: alpha parameter
+    o createSubjectProfileReport: suppress warnings Sweave
+    o prepareSubjectProfile: remove message: 'scale already present'
+    o vignette: more extensive example timeAlign/timeAlignPerSubject
+0.9.2
+    o createSubjectProfileReport: set knitr environment (to be used within rmd doc)
+    o export convertAesVar
+0.9.1
+    o createSubjectProfileReport: margin set by patient if reportPerSubject
+0.9.0
+    o subjectProfileCombine: fix extraction time limits in case no plot
+    o remove panel border for empty plot
+    o timeExpand
+0.8.0
+    o subjectProfileTextPlot: fix in case paramValueVar is empty
+    o subjectProfileIntervalPlot: use vertical segment if start and end dates are equal
+0.7.0
+    o timeAlign, timeAlignPerSubject: specification per or across modules
+    o subjectProfileIntervalPlot: fix when timeTrans and same start/end values
+0.6.0
+    o subjectProfileTextPlot: table format
+    o custom 'trans', getTimeTrans
+0.5.0
+    o createSubjectProfileReport: reportPerSubject and extend outputFile for different directory
+0.4.0
+    o createSubjectProfileReport/subjectProfileIntervalPlot: timeAlign
+    o defineIndex: fix index specification
+    o report: support unicode font (use cairo_pdf instead of pdf)
+0.3.0
+    o subjectProfileIntervalPlot: new parameters: timeStartShapeVar/timeEndShapeVar
+    o fix issue tibble: convert input data as data.frame
+0.2.0
+    o save nLines at module plot creation instead of extracting them  when combining plots
+    o when combining plots across modules, close graphic device only at the end
+    o formatParamVar: fix warning when multiple 'paramGroupVar'
+    o get[]ShapePalettePatientProfile
+    o getPageVar: fix for plot with multiple lines
+    o fix to remove warning: 'Coordinate system already present.'
+    o subjectProfileLinePlot: fix to remove warning: 'geom_path: Each group consists of only one observation'
+    o additional messages for verbose
+    o enable parallelized computations with 'nCores'
+    o createSubjectProfileReport: subjectSubset fix
+    o 'paging' parameter: enable export into one page
+    o subsetData parameter available in each plot function
+0.1.0
+    o example datasets moved to the utility pkg
+    o get[]ColorPalettePatientProfile/get[]LinetypePalettePatientProfile
+0.0.16
+    o subjectProfileTextPlot: concatenate multiple value variable with ', '
+    o subjectProfileIntervalPlot: timeLabel
+    o subjectProfile[Interval|Event|Line]Plot: use standard color palette if no color variable is specified
+0.0.15
+    o changes for []UtilityFct version 0.0.3
+    o subjectProfile[Event|Interval]Plot: paramVarSep, by default ' - ' instead of ' '
+    o getNLinesYGgplot: add space for subject profile event and interval
+    o formatParamVar: fix when empty string in paramVar
+0.0.14
+    o createSubjectProfileReport: add subjectSubset[Data|Var|Value] parameters
+    o child document: remove space and file separator for file name of exported image, include shiny progress message for each patient
+    o formatParamVar: fix in case similar levels with space difference
+0.0.13
+    o remove knitPrintListPlotsKnitr function
+    o include tests for each subjectProfile[*]Plot function with vdiffr package
+0.0.12
+    o include directly plots in report
+    o getPageVar/countNLines: fix when variable contains missing value
+    o subjectProfileTextPlot: wrap text in panel across multiple lines (formatParamVarTextPlot new function)
+    o getNLinesYGgplot: fix for text plot + increase size for text
+    o report: fix for margins and landscape layout
+0.0.11
+    o subjectProfileTextPlot: fix in case subjectVar same as paramNameVar/paramValueVar
+0.0.10
+    o externalise the functions getPatient[Color|Shape]Palette, and data function in utility pkg
+0.0.9
+    o getNLinesGgplot: check/extract number of lines in legend (getNLinesLegend new function)
+    o formatTimeInterval: fix issue extraction limits
+    o filterData/formatParamVar: warning in case variable not in data
+0.0.8
+    o subjectProfileCombine/prepareSubjectProfile/combineVerticallyGGplot: changes to align plots across pages
+    o subjectProfileTextPlot: possibility to have multiple paramValueVar if paramNameVar specified
+    o subjectProfileLinePlot: shapeVar/colorVar for point only 
+    o formatParamVar/subjectProfileReportFormat: set maximum length y-variable: yLabelWidth
+0.0.7
+    o subjectProfileCombine: adapt progress message
+    o use egg package to combine plots across modules
+    o automatic split within module: subjectProfileReportFormat, getPageVar functions and formatReport parameter
+    o getNLinesYGgplot: fix for interval plot
+    o combineVerticallyGGplot: close plotting window in case the egg package is used
+    o subjectProfileCombineOnce: fix automatic split of figures into multiple pages (new function: getSplitVectorByInt)
+    o bookmark: fixes for multiple plots per subject in knitPrintListPlotsKnitr and double backslash in defineIndex, only one column
+0.0.6
+    o subjectProfileLinePlot: include colorPalette
+    o subjectProfileIntervalPlot: don't delete records without start date, different arrows for missing start/end dates
+    o subjectProfileIntervalPlot: consider min/max time per subject in case of missing date, include timeLimData/timeLimVar
+    o addReferenceLinesProfilePlot: fix issue for panel plot (e.g. line plot) and use geom_text to get labels reference lines
+0.0.5
+    o add concomitant medications in vignette
+    o getNLinesYGgplot: extend to multiple panels 
+    o subjectProfileLinePlot: add paramValueRangeVar
+    o subsetVar and subsetValue
+0.0.4
+    o subjectProfileIntervalPlot: re-label [start|end]Var -> time[Start|end]Var and use arrow for non-ending interval
+    o use viridisLite instead of viridis paclage
+    o createSubjectProfileReport: automatic split of modules across pages in report
+    o subjectProfileTextPlot: concatenate information if duplicated info
+    o subjectProfileLinePlot
+    o getXLimSubjectProfilePlots: fix extraction limits for interval plot
+    o add sessionInfo, shiny parameter
+    o rename loadDataADaM by loadDataADaMSDTM
+    o defineIndex: fix when only one variable is used
+    o createSubjectProfileReport: possibility to sort subjects based on a variable
+0.0.3
+    o subjectProfileTextPlot: possibility to have multiple paramValueVar in same line, fix ordering
+    o subjectProfileTextPlot: paramValueVar can be a function
+    o subjectProfile[Interval|Event]Plot: colorPalette and getPatientColorPalette
+    o subjectProfileEventPlot: shapePalette and getPatientShapePalette
+    o add label attributes reported in case plot is empty
+    o add grouping variable
+    o subjectProfileTheme
+    o loadDataADAM: include support for date/time format
+    o createSubjectProfileReport/subjectProfileCombine: add refLines parameter
+    o new addReferenceLinesProfilePlot function
+    o add bookmark functionality
+    o include missing values in palette
+0.0.2
+    o remove utility pkg from the dependencies
+0.0.1
+    o initial commit

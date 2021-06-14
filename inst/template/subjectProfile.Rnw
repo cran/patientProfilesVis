@@ -1,0 +1,227 @@
+\documentclass[a4paper, 10pt]{article}
+
+\usepackage{imakeidx}
+
+% Chunk with specifc-enough names hould be used in order that 
+% if run within another knitr doc: all chunks should have unique names
+
+<<patientProfilesVis-optionsChunks, echo = FALSE, cache = FALSE, message = FALSE, warning = FALSE>>=
+
+	library(knitr)
+	library(grDevices) # for cairo_pdf
+	
+	outputDirFig <- "figures"
+	if(!dir.exists(outputDirFig))	dir.create(outputDirFig, recursive = TRUE)
+	
+	knitr::opts_chunk$set(
+		echo = FALSE, 
+		message = FALSE,
+		cache = FALSE,
+		warning = FALSE,
+		error = FALSE, # stop-on-error
+		results = "asis",
+		fig.align = "center",
+		fig.path = outputDirFig
+	)
+	
+	options(warn = 1, width = 200)
+	
+@
+
+<<patientProfilesVis-indexCustom-makeIndex>>=
+
+	if(!is.null(inputParameters$index$indexMake))
+		cat(inputParameters$index$indexMake)
+
+@
+
+\makeindex
+
+% decrease margins: 1.875 inches wide by default on 10pt
+<<patientProfilesVis-setMarginsAndLayout>>=
+	cat(paste0("\\usepackage[",
+		if(inputParameters$formatReport$landscape)	"landscape,",
+		"margin=", inputParameters$formatReport$margin, "in",
+		"]{geometry}\n")
+	)
+@
+
+% make clickeable table of contents
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    citecolor = black,
+    filecolor = black,
+    linkcolor = black,
+    urlcolor = black
+}
+
+\begin{document}
+
+%\tableofcontents
+
+\section{Subject}
+
+<<patientProfilesVis-includePlots>>=
+
+	listPlotsPerSubjectList <- inputParameters$listPlotsPerSubject
+
+	if(verbose)	message("Convert to list with 1 level.")
+	# convert list of list to list with only one level
+	listPlotsPerSubject <- unlist(listPlotsPerSubjectList, recursive = FALSE)
+#	names(listPlotsPerSubject) <- sapply(listPlotsPerSubject, names)
+	
+	names(listPlotsPerSubject) <- paste0(
+		paste(
+			rep(names(listPlotsPerSubjectList), times = sapply(listPlotsPerSubjectList, length)),
+			unlist(lapply(listPlotsPerSubjectList, seq_along)),
+			sep = " (part: "
+		), ")"
+	)	
+	
+	# extract height for each plot
+	if(verbose)	message("Extract height for each plot.")
+	figHeightInches <- sapply(listPlotsPerSubject, function(plotSubject)
+		# number of lines in plot panel
+		attr(plotSubject, "metaData")$nLines * inputParameters$formatReport$heightLineIn
+	)
+	
+	# extract labels 
+	# remove space and file separator character(s) if present
+	if(verbose)	message("Extract labels.")
+	labelPlots <-  gsub(paste0(.Platform$file.sep, "| "), "-",
+		gsub("(.+) \\(part: (.+)\\)", "\\1-\\2", names(listPlotsPerSubject))
+	)
+	
+	# extract titles
+	if(verbose)	message("Extract title.")
+	sectionTitles <- unlist(lapply(names(listPlotsPerSubjectList), function(subject) 
+		c(subject, rep("", length(listPlotsPerSubjectList[[subject]])-1)))
+	)
+
+	# extract titles
+	if(verbose)	message("Extract bookmarks (if any).")
+	bookmarkInfos <- if(!is.null(inputParameters$index))
+		unlist(lapply(names(listPlotsPerSubjectList), function(subject) 
+			c(inputParameters$index$indexEntry[subject], rep("", length(listPlotsPerSubjectList[[subject]])-1))))
+		
+#	textHeightPt <- ifelse(landscape, 345, 598)
+	if(verbose)	message("Get width plot.")
+	textWidthInches <- getWidthPlot(
+		margin = inputParameters$formatReport$margin,
+		landscape = inputParameters$formatReport$landscape,
+		aspectRatio = inputParameters$formatReport$aspectRatio
+	)
+	# option 1:
+#	system.time(knitPrintListPlotsKnitr(
+#		plotsList = listPlotsPerSubject,
+#		out.width = "'\\\\textwidth'",
+#		fig.height = figHeightInches,
+#		fig.width = textWidthInches,
+#		sectionTitles = sectionTitles,
+#		labels = labelPlots,
+#		bookmarkInfos = bookmarkInfos
+#	))
+	
+	# option 2:
+	if(verbose)	message("Export plots.")
+	fileNames <- file.path(outputDirFig, paste0(labelPlots, ".pdf"))
+	
+	if(inputParameters$shiny)	requireNamespace("shiny")
+	
+#	if(inputParameters$nCores > 1){
+#		
+#		require("parallel")
+#		
+#		msg <- paste("Export profiles in parallel.")
+#		if(verbose)	message(msg)
+#		if(inputParameters$shiny)	incProgress(detail = msg)
+#		
+#		cl <- makeCluster(inputParameters$nCores)
+#		tmp <- parSapply(
+#			cl = cl,
+#			X = seq_along(listPlotsPerSubject),
+#			FUN = function(i){	
+#				pdf(fileNames[i], width = textWidthInches, height = figHeightInches[i])
+#				print(listPlotsPerSubject[[i]])
+#				tmp <- dev.off()
+#			}, 
+#			simplify = FALSE
+#		)
+#		stopCluster(cl = cl)
+#		
+#	}else{
+		
+		msg <- paste("Export profiles.")
+		if(verbose)	message(msg)
+		if(inputParameters$shiny)	incProgress(0.1, detail = msg)
+	
+		# create the plots
+		tmp <- sapply(seq_along(listPlotsPerSubject), function(i){
+			msg <- paste("Export profile:", names(listPlotsPerSubject)[i])
+			if(verbose)	message(msg)
+			if(inputParameters$shiny)	incProgress(detail = msg)
+			# use cairo_pdf instead of pdf to support unicode symbols
+			cairo_pdf(fileNames[i], width = textWidthInches, height = figHeightInches[i])
+			print(listPlotsPerSubject[[i]])
+			tmp <- dev.off()
+		})
+
+#	}
+	
+	# include the graphics in the report
+	if(verbose)	message("Include graphics in the report.")
+	tmp <- sapply(seq_along(listPlotsPerSubject), function(i){
+				
+		# section title
+		if(sectionTitles[i] != "")
+			cat("\\subsection{", sectionTitles[i], "}", 
+			if(!is.null(bookmarkInfos) && bookmarkInfos[i] != "")	bookmarkInfos[i],
+			"\n", sep = ""
+		)
+		cat("\\includegraphics[width=\\textwidth]{", fileNames[i], "}\n", sep = "")
+		cat('\\newpage\n')
+			
+	})
+
+@
+
+
+
+% add table of contents in 'Index'
+%\cleardoublepage
+%\phantomsection
+%\addcontentsline{toc}{chapter}{\indexname}
+
+<<patientProfilesVis-indexCustom-printIndex>>=
+
+	if(!is.null(inputParameters$index$indexPrint)) {
+		cat("\\section{Index}\n")
+		cat(inputParameters$index$indexPrint)
+	}
+
+@
+
+\printindex
+
+\newpage
+
+\section{Appendix}
+
+\subsection{Session information}
+
+This report was \Sexpr{ifelse(inputParameters$shiny, "automatically generated by a Shiny application", "generated")}
+the: \Sexpr{format(Sys.time(), format = "%Y-%m-%d at %H:%M:%S")}.
+
+<<patientProfilesVis-sessionInfo>>=
+
+	sessionInfoTex <- toLatex(sessionInfo())
+	# highlight versions of patientProfilesVis and patientProfilesVisShiny packages
+	sessionInfoTex <- gsub("(patientProfilesVis[Shiny]*~[^,]*)", "\\\\textbf{\\1}", sessionInfoTex)
+	sessionInfoTex <- gsub("(clinUtils~[^,]*)", "\\\\textbf{\\1}", sessionInfoTex)
+	
+	print(sessionInfoTex)
+	
+@
+
+\end{document}
