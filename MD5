@@ -1,4 +1,4 @@
-8583bcec745fee504a20a5bd74d6a961 *DESCRIPTION
+189739415484712da63317b29d4a20e4 *DESCRIPTION
 01974937b40279205581a84931ae0cdf *LICENSE
 788d4f0a86a16fc8b0aa6cca19f5aef0 *NAMESPACE
 bcebd2d3bb7936e3f647a5893f12eef0 *R/init.R
@@ -16,11 +16,11 @@ da2a070fb8dfc07144d722c421e6acdc *R/subjectProfileEventPlot.R
 1f64bcffa5addaf504125b98fda7abb3 *R/subjectProfileTextPlot.R
 8e669e2ae67038f107d19030f05d6791 *R/timeTransformations.R
 d06b3da643a021bbefd0967f2022c49f *build/vignette.rds
-eb2f42e30938677c87466d5d72c308e7 *inst/NEWS
+19a826b4a27755573fb03dfb329bda0e *inst/NEWS
 1b9f8c3bcd1669679cab26072b7a0315 *inst/doc/patientProfiles-template-SDTM.Rmd
-aef9408ffd24807fb3ac33750f793c04 *inst/doc/patientProfiles-template-SDTM.html
-83c2b9d7af28143ac8a0abcec400ec66 *inst/doc/patientProfilesVis-introduction.Rmd
-dd9e37e9fda6de6fe757b5571cd3af39 *inst/doc/patientProfilesVis-introduction.html
+31c0eef76905d64e5ce5dca52a05d9f2 *inst/doc/patientProfiles-template-SDTM.html
+a55d95762668cc0fbc14f37df22ae9c5 *inst/doc/patientProfilesVis-introduction.Rmd
+c46f8004d4cd4c88cbfa19e6adea0620 *inst/doc/patientProfilesVis-introduction.html
 770c13493c4255a158e059382d47a676 *inst/examples/filterData-example.R
 6c262720467dec89c8c6bc5dec45affe *inst/template/subjectProfile.Rnw
 5cf8be138acd3deeba43ebf97f5a2251 *man/addReferenceLinesProfilePlot.Rd
@@ -79,4 +79,4 @@ b4059a9b87ff4435f32fddb6d6c3410e *tests/testthat/test_subjectProfileIntervalPlot
 716372599623fe1387c5c63c35732f90 *tests/testthat/test_timeAlignment.R
 94b13bd165eecc9ea66e7cc68ef4b6cc *tests/testthat/test_timeTransformations.R
 1b9f8c3bcd1669679cab26072b7a0315 *vignettes/patientProfiles-template-SDTM.Rmd
-83c2b9d7af28143ac8a0abcec400ec66 *vignettes/patientProfilesVis-introduction.Rmd
+a55d95762668cc0fbc14f37df22ae9c5 *vignettes/patientProfilesVis-introduction.Rmd
