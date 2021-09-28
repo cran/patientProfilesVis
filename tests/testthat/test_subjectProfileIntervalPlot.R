@@ -4,7 +4,7 @@ library(ggplot2)
 library(reshape2)
 library(scales)
 
-test_that("subject variable is specified", {
+test_that("Subject profile plots are correctly sorted in the output based on the levels of the subject ID variable", {
 			
 	data <- data.frame(
 		TEST = c("A", "B", "C"),
@@ -27,7 +27,7 @@ test_that("subject variable is specified", {
 			
 })
 
-test_that("error if subject variable is not present in the data", {
+test_that("An error is generated if the subject variable is not present in the data", {
 			
 	data <- data.frame(
 		TEST = c("A", "B", "C"),
@@ -47,7 +47,7 @@ test_that("error if subject variable is not present in the data", {
 			
 })
 
-test_that("parameter values are correctly displayed by subject", {
+test_that("Parameter variables are correctly displayed for each subject", {
 			
 	data <- data.frame(
 		TEST = c("A", "B", "C"),
@@ -133,7 +133,7 @@ test_that("parameter values are correctly displayed by subject", {
 	
 })
 
-test_that("multiple parameter variables are correctly combined and ordered", {
+test_that("Multiple parameter variables are correctly combined and ordered", {
 			
 	# example where variables are specified as factor
 	# in this case variables are ordered based on factor levels
@@ -204,7 +204,7 @@ test_that("multiple parameter variables are correctly combined and ordered", {
 	
 })
 
-test_that("variable(s) of parameters are combined with specified separator", {
+test_that("Parameter values are correctly combined with a specified separator", {
 			
 	data <- data.frame(
 		CAT = c("A", "A", "A", "B"),
@@ -234,7 +234,7 @@ test_that("variable(s) of parameters are combined with specified separator", {
 	
 })
 
-test_that("label(s) for parameter variable(s) are specified", {
+test_that("Specified labels for parameter variables are correctly set", {
 			
 	data <- data.frame(
 		CAT = "A", TEST = "a1",
@@ -269,7 +269,7 @@ test_that("label(s) for parameter variable(s) are specified", {
 	
 })
 
-test_that("parameters are grouped based on grouping variable(s)", {
+test_that("Parameter values are correctly ordered/grouped based on grouping variables", {
 			
 	# example where data is first sorted based on multiple
 	# grouping variables (factor and character),
@@ -304,7 +304,7 @@ test_that("parameters are grouped based on grouping variable(s)", {
 	
 })
 
-test_that("points are colored based on a variable", {
+test_that("Data points are correctly colored based on a specified variable", {
 			
 	data <- data.frame(
 		TEST = c(1, 1, 2),
@@ -397,7 +397,7 @@ test_that("points are colored based on a variable", {
 	
 })
 
-test_that("points are colored with specified palette", {
+test_that("Data points are correctly colored with a specified palette", {
 			
 	data <- data.frame(
 		TEST = c(1, 1, 2),
@@ -432,7 +432,7 @@ test_that("points are colored with specified palette", {
 			
 })
 
-test_that("color label is specified", {
+test_that("A specified label for the color variable is correctly set", {
 			
 	data <- data.frame(
 		TEST = c(1, 1, 2),
@@ -464,7 +464,7 @@ test_that("color label is specified", {
 			
 })
 
-test_that("missing time values are not imputed", {
+test_that("Missing time values are not imputed if requested", {
 	
 	# TEST 1: missing start, missing end
 	# TEST 2: complete interval
@@ -531,7 +531,7 @@ test_that("missing time values are not imputed", {
 			
 })
 
-test_that("missing time values are imputed with 'minimal' imputation", {
+test_that("Missing time values are correctly imputed with 'minimal' imputation", {
 			
 	# TEST 1: missing start, missing end
 	# TEST 2: complete interval
@@ -605,7 +605,42 @@ test_that("missing time values are imputed with 'minimal' imputation", {
 			
 })
 
-test_that("missing time values are imputed based on data records", {
+test_that("Figure height correctly includes legend height when shape variables are not specified", {
+		
+	# This is fixed in the version 2.0.2 of the package
+	data <- data.frame(
+		TEST = 1,
+		START = 1,
+		START_STATUS = "Complete",
+		END_STATUS = "Complete",
+		END = 1,
+		USUBJID = "1"
+	)
+			
+	plotsShapeDef <- subjectProfileIntervalPlot(
+		data = data,
+		timeStartVar = "START",
+		timeEndVar = "END",
+		paramVar = "TEST"
+	)	
+	
+	plotsShapeSpec <- subjectProfileIntervalPlot(
+		data = data,
+		timeStartVar = "START",
+		timeStartShapeVar = "START_STATUS",
+		timeEndShapeVar = "END_STATUS",
+		timeEndVar = "END",
+		paramVar = "TEST"
+	)	
+	
+	expect_gte(
+		object = attr(plotsShapeDef[[1]][[1]], "metaData")$nLines,
+		expected = attr(plotsShapeSpec[[1]][[1]], "metaData")$nLines
+	)
+			
+})
+
+test_that("Missing time values are correctly imputed with data-based imputation", {
 			
 	# USUBJID 1: 
 	# - TEST 1: missing start, missing end -> imputed by TEST 2
@@ -699,7 +734,7 @@ test_that("missing time values are imputed based on data records", {
 	
 })
 
-test_that("time values imputed from the data are set to the interval [0, Inf] when all data records are missing", {
+test_that("Missing time values are set to the interval [0, Inf] when all data records are missing", {
 			
 	data <- data.frame(
 		TEST = 1,
@@ -730,7 +765,7 @@ test_that("time values imputed from the data are set to the interval [0, Inf] wh
 })
 
 
-test_that("missing time values are imputed based on an external dataset", {
+test_that("Missing time values are correctly imputed based on an external dataset", {
 			
 	# USUBJID 1: missing end, complete interval
 	# USUBJID 2: missing start and end date
@@ -837,7 +872,7 @@ test_that("missing time values are imputed based on an external dataset", {
 			
 })
 
-test_that("warning in case external dataset but not time variables are specified", {
+test_that("A warning is generated in case the time variables in the external data set are not specified", {
 			
 	data <- data.frame(
 		TEST = "1",
@@ -866,7 +901,7 @@ test_that("warning in case external dataset but not time variables are specified
 	
 })
 		
-test_that("points are set transparent", {
+test_that("Data points are correctly set transparent", {
 			
 	data <- data.frame(
 		TEST = c(1, 1, 2),
@@ -898,7 +933,7 @@ test_that("points are set transparent", {
 })
 
 
-test_that("a transformation is applied on the time variable", {
+test_that("A transformation is correctly applied on the time variable", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -929,7 +964,7 @@ test_that("a transformation is applied on the time variable", {
 			
 })
 
-test_that("time axis is expanded", {
+test_that("The time axis is correctly expanded if requested", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -960,7 +995,7 @@ test_that("time axis is expanded", {
 			
 })
 
-test_that("time limits are specified", {
+test_that("Limits for the time axis are correctly set", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -985,7 +1020,7 @@ test_that("time limits are specified", {
 			
 })
 
-test_that("visualizations are not aligned in the time axis", {
+test_that("Each visualization is correctly created with its own time-limits", {
 			
 	data <- data.frame(
 		TEST = c("A", "B", "A", "B"),
@@ -1008,7 +1043,7 @@ test_that("visualizations are not aligned in the time axis", {
 			
 })
 
-test_that("visualizations are aligned in the time axis", {
+test_that("The different visualizations are correctly aligned along the time axis if time limits are specified", {
 			
 	data <- data.frame(
 		TEST = c("A", "B", "A", "B"),
@@ -1034,7 +1069,7 @@ test_that("visualizations are aligned in the time axis", {
 })
 
 
-test_that("time axis alignment and specification of time limits is not compatible", {
+test_that("A warning is generated when time limits are specified while visualizations should not be horizontally aligned", {
 			
 	data <- data.frame(
 		TEST = c("A", "B", "A", "B"),
@@ -1059,7 +1094,7 @@ test_that("time axis alignment and specification of time limits is not compatibl
 			
 })
 
-test_that("label is specified for the x variable", {
+test_that("A label for the variable on the x-axis is correctly set", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -1082,7 +1117,7 @@ test_that("label is specified for the x variable", {
 			
 })
 
-test_that("label is specified for the y variable", {
+test_that("A label for the variable on the y-axis is correctly set", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -1106,7 +1141,7 @@ test_that("label is specified for the y variable", {
 			
 })
 
-test_that("title is specified", {
+test_that("A title is correctly set", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -1133,7 +1168,7 @@ test_that("title is specified", {
 			
 })
 
-test_that("label is specified", {
+test_that("A label for the metadata of the subject profile plots is correctly set", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -1158,7 +1193,7 @@ test_that("label is specified", {
 			
 })
 
-test_that("points at the start or end of the interval are shaped based on a variable", {
+test_that("Shapes of data points at the start or the end of a time interval are correctly set based on a variable", {
 			
 	data <- data.frame(
 		TEST = seq(2),
@@ -1226,7 +1261,7 @@ test_that("points at the start or end of the interval are shaped based on a vari
 	
 })
 
-test_that("points are shaped with specified palette", {
+test_that("Data points are correctly shaped with a specified palette", {
 			
 	data <- data.frame(
 		TEST = seq(2),
@@ -1276,7 +1311,7 @@ test_that("points are shaped with specified palette", {
 	}
 })
 
-test_that("shape label is specified", {
+test_that("A specified label for the shape variable is correctly set", {
 			
 	data <- data.frame(
 		TEST = seq(2),
@@ -1311,7 +1346,7 @@ test_that("shape label is specified", {
 		
 })
 
-test_that("symbols are set to a specific size", {
+test_that("The shape symbols are correctly set to a specific size", {
 			
 	data <- data.frame(
 		TEST = seq(2),
@@ -1345,7 +1380,7 @@ test_that("symbols are set to a specific size", {
 			
 })
 
-test_that("variable labels are specified", {
+test_that("Labels for aesthetic, plot or axis title are correctly extracted from the specified variable labels", {
 			
 	data <- data.frame(
 		TEST = seq(3),
@@ -1410,3 +1445,4 @@ test_that("variable labels are specified", {
 	expect_equal(unname(colorScale$name), "Reference indicator")
 	
 })
+
