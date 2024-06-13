@@ -13,6 +13,9 @@
 #' If set to FALSE, this is not compatible with 
 #' the specification of \code{timeLim}.
 #' @param title String with title, label of the parameter variable by default.
+#' @param caption (optional) String with caption (NULL for no caption). 
+#' By default the caption contains information on the imputation strategy 
+#' for missing time. 
 #' @inheritParams patientProfilesVis-common-args
 #' @inheritParams filterData
 #' @inheritParams clinUtils::formatVarForPlotLabel
@@ -58,6 +61,7 @@ subjectProfileIntervalPlot <- function(
 	shapeSize = rel(3),
 	title = toString(getLabelVar(paramVar, labelVars = labelVars, label = paramLab)),
 	label = title,
+	caption,
 	labelVars = NULL,
 	formatReport = subjectProfileReportFormat(),
 	paging = TRUE){
@@ -96,7 +100,7 @@ subjectProfileIntervalPlot <- function(
 	timeLim <- resMSED$timeLim
 	timeLimInit <- resMSED$timeLimSpecified
 	timeShapePalette <- resMSED$timeShapePalette
-	caption <- resMSED$caption
+	caption <- if(!missing(caption)){caption}else{resMSED$caption}
 	
 	# specify the time limits if not specified
 	# otherwise if missing values for start/end for all records of a patient
@@ -173,10 +177,10 @@ subjectProfileIntervalPlot <- function(
 					
 			aesArgs <- c(
 				list(
-					x = timeStartVar, xend = timeEndVar, 
-					y = "yVar", yend = "yVar"
+					x = sym(timeStartVar), xend = sym(timeEndVar), 
+					y = sym("yVar"), yend = sym("yVar")
 				),
-				if(!is.null(colorVar))	list(color = colorVar)
+				if(!is.null(colorVar))	list(color = sym(colorVar))
 			)
 			
 			# create the plot
@@ -189,21 +193,22 @@ subjectProfileIntervalPlot <- function(
 			# important! entire data should be defined with the first geom
 			# and segment defined first, otherwise
 			# order in labels of y-axis can be different between geom_point and geom_segment
-			gg <- gg + geom_segment(
-				mapping = do.call(aes_string, aesArgs),
-				data = dataSubjectPage,
-				size = 2, show.legend = TRUE, 
-				alpha = alpha
-			)
+			argsSegment <- list(
+			  mapping = do.call(aes, aesArgs), data = dataSubjectPage,
+			  show.legend = TRUE, alpha = alpha
+			 )
+			aesLineSize <- ifelse(packageVersion("ggplot2") >= "3.4.0", "linewidth", "size")
+			argsSegment[[aesLineSize]] <- 2
+			gg <- gg + do.call(geom_segment, argsSegment)
 				
 			geomPointCustom <- function(gg, xVar, shapeVar){			
 				aesPC <- c(
-					list(x = xVar, y = "yVar", shape = shapeVar), 
-					if(!is.null(colorVar))	list(color = colorVar)
+					list(x = sym(xVar), y = sym("yVar"), shape = sym(shapeVar)), 
+					if(!is.null(colorVar))	list(color = sym(colorVar))
 				)
 				gg + geom_point(
 					data = dataSubjectPage, 
-					mapping = do.call(aes_string, aesPC), 
+					mapping = do.call(aes, aesPC), 
 					fill = "white",
 					size = shapeSize,
 					position = position_nudge(y = -0.01),
