@@ -1,12 +1,12 @@
 ## ----setUpTemplateForYourStudy, eval = FALSE----------------------------------
-#  
-#  # get template from the package
-#  pathTemplate <- system.file(
-#  	"doc", "patientProfiles-template-SDTM.Rmd",
-#  	package = "patientProfilesVis"
-#  )
-#  file.copy(from = pathTemplate, to = ".")
-#  # Note: your current working directory can be checked with: getwd()
+# 
+# # get template from the package
+# pathTemplate <- system.file(
+# 	"doc", "patientProfiles-template-SDTM.Rmd",
+# 	package = "patientProfilesVis"
+# )
+# file.copy(from = pathTemplate, to = ".")
+# # Note: your current working directory can be checked with: getwd()
 
 ## ----patientProfiles-optionsChunks, echo = FALSE, cache = FALSE---------------
 
@@ -194,47 +194,47 @@
 	
 
 ## ----patientProfiles-ECG, eval = FALSE----------------------------------------
-#  
-#  	# If available, reference range indicator
-#  	# could be displayed via the color/shape variable
-#  
-#  	egPlots <- subjectProfileLinePlot(
-#  		data = dataAll$EG,
-#  		paramValueVar = "EGSTRESN",
-#  		paramNameVar = "EGTEST",
-#  		timeVar = "EGDY",
-#  		# optional
-#  		title = "Electrocardiogram",
-#  		alpha = 0.8,
-#  		labelVars = labelVars
-#  	)
-#  	patientProfilesPlots <- c(patientProfilesPlots, list(EG = egPlots))
-#  	
+# 
+# 	# If available, reference range indicator
+# 	# could be displayed via the color/shape variable
+# 
+# 	egPlots <- subjectProfileLinePlot(
+# 		data = dataAll$EG,
+# 		paramValueVar = "EGSTRESN",
+# 		paramNameVar = "EGTEST",
+# 		timeVar = "EGDY",
+# 		# optional
+# 		title = "Electrocardiogram",
+# 		alpha = 0.8,
+# 		labelVars = labelVars
+# 	)
+# 	patientProfilesPlots <- c(patientProfilesPlots, list(EG = egPlots))
+# 	
 
 ## ----patientProfiles-createSubjectProfileReport, message = FALSE, warning = TRUE, eval = FALSE----
-#  
-#  	pathsPatientProfiles <- createSubjectProfileReport(
-#  			
-#  		listPlots = patientProfilesPlots,
-#  		
-#  		# optional
-#  		reportPerSubject = TRUE,
-#  		verbose = TRUE,
-#  		outputFile = './patientProfiles/subjectProfile.pdf',
-#  		timeAlign = "all", timeAlignPerSubject = "all",
-#  		exportBatchSize = 5,
-#  		
-#  		# export subjects with highest adverse events severity
-#  		subjectSortData = dataAll$AE,
-#  		subjectSortVar = "AESEV",
-#  		subjectSortDecreasing = TRUE,
-#  		
-#  #		# only patients with severe adverse events
-#  #		subjectSubsetData = dataAll$AE,
-#  #		subsetVar = "AETOXGR",
-#  #		subsetValue = "SEVERE"
-#  	)
-#  
+# 
+# 	pathsPatientProfiles <- createSubjectProfileReport(
+# 			
+# 		listPlots = patientProfilesPlots,
+# 		
+# 		# optional
+# 		reportPerSubject = TRUE,
+# 		verbose = TRUE,
+# 		outputFile = './patientProfiles/subjectProfile.pdf',
+# 		timeAlign = "all", timeAlignPerSubject = "all",
+# 		exportBatchSize = 5,
+# 		
+# 		# export subjects with highest adverse events severity
+# 		subjectSortData = dataAll$AE,
+# 		subjectSortVar = "AESEV",
+# 		subjectSortDecreasing = TRUE,
+# 		
+# #		# only patients with severe adverse events
+# #		subjectSubsetData = dataAll$AE,
+# #		subsetVar = "AETOXGR",
+# #		subsetValue = "SEVERE"
+# 	)
+# 
 
 ## ----sessionInformation, echo = FALSE-----------------------------------------
 

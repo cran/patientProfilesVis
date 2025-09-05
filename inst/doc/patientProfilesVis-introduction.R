@@ -810,231 +810,231 @@ print(lbPlots[[subjectLB]][[1]])
 
 
 ## ----createReport-SDTM, eval = FALSE------------------------------------------
-#  
-#  # demography
-#  dmPlots <- subjectProfileTextPlot(
-#  	data = dataSDTM$DM,
-#  	paramValueVar = c("SEX|AGE", "RACE|COUNTRY", "ARM"),
-#  	labelVars = labelVarsSDTM
-#  )
-#  
-#  # medical history
-#  mhPlots <- subjectProfileTextPlot(
-#  	data = dataSDTM$MH,
-#  	paramNameVar = c("MHDECOD"),
-#  	paramValueVar = c("MHCAT", "MHTERM", "MHSTDTC"),
-#  	title = "Medical History: status",
-#  	labelVars = labelVarsSDTM
-#  )
-#  
-#  # concomitant medications
-#  cmPlots <- subjectProfileIntervalPlot(
-#  	data = dataSDTM$CM,
-#  	paramVar = c(
-#  		"CMTRT",
-#  		"CMDOSE", "CMDOSU", "CMROUTE",
-#  		"CMDOSFRQ"
-#  	),
-#  	timeStartVar = "CMSTDY",
-#  	timeEndVar = "CMENDY",
-#  	paramGroupVar = "CMCLAS",
-#  	colorVar = "CMCLAS",
-#  	timeTrans = timeTrans,
-#  	title = "Concomitant medications",
-#  	labelVars = labelVarsSDTM
-#  )
-#  
-#  # treatment exposure
-#  exPlots <- subjectProfileIntervalPlot(
-#  	data = dataSDTM$EX,
-#  	paramVar = c("EXTRT", "EXDOSE", "EXDOSU"),
-#  	timeStartVar = "EXSTDY",
-#  	timeEndVar = "EXENDY",
-#  	colorVar = "EXDOSFRM",
-#  	labelVars = labelVarsSDTM,
-#  	title = "Treatment exposure"
-#  )
-#  
-#  # adverse events:
-#  dataAE <- dataSDTM$AE
-#  # sort severities
-#  dataAE[, "AESEV"] <- factor(dataAE[, "AESEV"], levels = c("MILD", "MODERATE", "SEVERE"))
-#  aePlots <- subjectProfileIntervalPlot(
-#  	data = dataAE,
-#  	paramVar = "AETERM",
-#  	timeStartVar = "AESTDY",
-#  	timeEndVar = "AEENDY",
-#  	colorVar = "AESEV",
-#  	labelVars = labelVarsSDTM,
-#  	title = "Adverse events"
-#  )
-#  
-#  # laboratory parameter
-#  lbLinePlots <- subjectProfileLinePlot(
-#  	data = dataSDTM$LB,
-#  	paramNameVar = "LBTEST",
-#  	paramValueVar = "LBSTRESN",
-#  	paramValueRangeVar = c("LBSTNRLO", "LBSTNRHI"),
-#  	paramGroupVar = "LBCAT",
-#  	timeVar = "LBDY",
-#  	title = "Laboratory test measurements: actual value",
-#  	labelVars = labelVarsSDTM
-#  )
-#  
-#  # create report
-#  pathReport <- "subjectProfile_SDTM.pdf"
-#  createSubjectProfileReport(
-#  	listPlots = list(
-#  		dmPlots,
-#  		mhPlots,
-#  		cmPlots,
-#  		exPlots,
-#  		aePlots,
-#  		lbLinePlots
-#  	),
-#  	outputFile = pathReport
-#  )
-#  
+# 
+# # demography
+# dmPlots <- subjectProfileTextPlot(
+# 	data = dataSDTM$DM,
+# 	paramValueVar = c("SEX|AGE", "RACE|COUNTRY", "ARM"),
+# 	labelVars = labelVarsSDTM
+# )
+# 
+# # medical history
+# mhPlots <- subjectProfileTextPlot(
+# 	data = dataSDTM$MH,
+# 	paramNameVar = c("MHDECOD"),
+# 	paramValueVar = c("MHCAT", "MHTERM", "MHSTDTC"),
+# 	title = "Medical History: status",
+# 	labelVars = labelVarsSDTM
+# )
+# 
+# # concomitant medications
+# cmPlots <- subjectProfileIntervalPlot(
+# 	data = dataSDTM$CM,
+# 	paramVar = c(
+# 		"CMTRT",
+# 		"CMDOSE", "CMDOSU", "CMROUTE",
+# 		"CMDOSFRQ"
+# 	),
+# 	timeStartVar = "CMSTDY",
+# 	timeEndVar = "CMENDY",
+# 	paramGroupVar = "CMCLAS",
+# 	colorVar = "CMCLAS",
+# 	timeTrans = timeTrans,
+# 	title = "Concomitant medications",
+# 	labelVars = labelVarsSDTM
+# )
+# 
+# # treatment exposure
+# exPlots <- subjectProfileIntervalPlot(
+# 	data = dataSDTM$EX,
+# 	paramVar = c("EXTRT", "EXDOSE", "EXDOSU"),
+# 	timeStartVar = "EXSTDY",
+# 	timeEndVar = "EXENDY",
+# 	colorVar = "EXDOSFRM",
+# 	labelVars = labelVarsSDTM,
+# 	title = "Treatment exposure"
+# )
+# 
+# # adverse events:
+# dataAE <- dataSDTM$AE
+# # sort severities
+# dataAE[, "AESEV"] <- factor(dataAE[, "AESEV"], levels = c("MILD", "MODERATE", "SEVERE"))
+# aePlots <- subjectProfileIntervalPlot(
+# 	data = dataAE,
+# 	paramVar = "AETERM",
+# 	timeStartVar = "AESTDY",
+# 	timeEndVar = "AEENDY",
+# 	colorVar = "AESEV",
+# 	labelVars = labelVarsSDTM,
+# 	title = "Adverse events"
+# )
+# 
+# # laboratory parameter
+# lbLinePlots <- subjectProfileLinePlot(
+# 	data = dataSDTM$LB,
+# 	paramNameVar = "LBTEST",
+# 	paramValueVar = "LBSTRESN",
+# 	paramValueRangeVar = c("LBSTNRLO", "LBSTNRHI"),
+# 	paramGroupVar = "LBCAT",
+# 	timeVar = "LBDY",
+# 	title = "Laboratory test measurements: actual value",
+# 	labelVars = labelVarsSDTM
+# )
+# 
+# # create report
+# pathReport <- "subjectProfile_SDTM.pdf"
+# createSubjectProfileReport(
+# 	listPlots = list(
+# 		dmPlots,
+# 		mhPlots,
+# 		cmPlots,
+# 		exPlots,
+# 		aePlots,
+# 		lbLinePlots
+# 	),
+# 	outputFile = pathReport
+# )
+# 
 
 ## ----createReport-ADaM, eval = FALSE------------------------------------------
-#  
-#  # demography
-#  adslPlots <- subjectProfileTextPlot(
-#  	data = dataADaM$ADSL,
-#  	paramValueVar = c("SEX|AGE", "RACE", "TRT01P"),
-#  	labelVars = labelVarsADaM
-#  )
-#  
-#  # adverse events:
-#  dataADAE <- dataADaM$ADAE
-#  # sort severities
-#  dataADAE[, "AESEV"] <- factor(dataAE[, "AESEV"], levels = c("MILD", "MODERATE", "SEVERE"))
-#  adaePlots <- subjectProfileIntervalPlot(
-#  	data = dataADAE,
-#  	paramVar = "AEDECOD",
-#  	timeStartVar = "ASTDY",
-#  	timeEndVar = "AENDY",
-#  	colorVar = "AESEV",
-#  	labelVars = labelVarsADaM,
-#  	timeTrans = getTimeTrans("asinh-neg"),
-#  	title = "Adverse events"
-#  )
-#  
-#  # laboratory parameter
-#  adlbcPlots <- subjectProfileLinePlot(
-#  	data = dataADaM$ADLBC,
-#  	paramNameVar = "PARAM",
-#  	paramValueVar = "AVAL",
-#  	paramValueRangeVar = c("A1LO", "A1HI"),
-#  	paramGroupVar = "PARCAT1",
-#  	timeVar = "ADY",
-#  	title = "Laboratory test measurements: actual value",
-#  	labelVars = labelVarsADaM
-#  )
-#  
-#  # create report
-#  pathReport <- "subjectProfile_ADaM.pdf"
-#  createSubjectProfileReport(
-#  	listPlots = list(
-#  		adslPlots,
-#  		adaePlots,
-#  		adlbcPlots
-#  	),
-#  	outputFile = pathReport
-#  )
-#  
+# 
+# # demography
+# adslPlots <- subjectProfileTextPlot(
+# 	data = dataADaM$ADSL,
+# 	paramValueVar = c("SEX|AGE", "RACE", "TRT01P"),
+# 	labelVars = labelVarsADaM
+# )
+# 
+# # adverse events:
+# dataADAE <- dataADaM$ADAE
+# # sort severities
+# dataADAE[, "AESEV"] <- factor(dataAE[, "AESEV"], levels = c("MILD", "MODERATE", "SEVERE"))
+# adaePlots <- subjectProfileIntervalPlot(
+# 	data = dataADAE,
+# 	paramVar = "AEDECOD",
+# 	timeStartVar = "ASTDY",
+# 	timeEndVar = "AENDY",
+# 	colorVar = "AESEV",
+# 	labelVars = labelVarsADaM,
+# 	timeTrans = getTimeTrans("asinh-neg"),
+# 	title = "Adverse events"
+# )
+# 
+# # laboratory parameter
+# adlbcPlots <- subjectProfileLinePlot(
+# 	data = dataADaM$ADLBC,
+# 	paramNameVar = "PARAM",
+# 	paramValueVar = "AVAL",
+# 	paramValueRangeVar = c("A1LO", "A1HI"),
+# 	paramGroupVar = "PARCAT1",
+# 	timeVar = "ADY",
+# 	title = "Laboratory test measurements: actual value",
+# 	labelVars = labelVarsADaM
+# )
+# 
+# # create report
+# pathReport <- "subjectProfile_ADaM.pdf"
+# createSubjectProfileReport(
+# 	listPlots = list(
+# 		adslPlots,
+# 		adaePlots,
+# 		adlbcPlots
+# 	),
+# 	outputFile = pathReport
+# )
+# 
 
 ## ----createReport-referenceLines-list, eval = FALSE---------------------------
-#  
-#  # reference lines input parameter
-#  refLinesParam <- list(
-#  	list(
-#  		time = -7,
-#  		label = "Screening 1",
-#  		color = "purple"
-#  	),
-#  	list(
-#  		time = -7,
-#  		label = "Screening 2",
-#  		color = "purple"
-#  	),
-#  	list(
-#  		time = 1,
-#  		label = "Baseline",
-#  		color = "darkblue"
-#  	)
-#  )
-#  
-#  # create report
-#  pathReport <- "subjectProfile_SDTM_referenceLines_custom.pdf"
-#  createSubjectProfileReport(
-#  	listPlots = list(
-#  		dmPlots,
-#  		mhPlots,
-#  		cmPlots,
-#  		exPlots,
-#  		aePlots,
-#  		lbLinePlots
-#  	),
-#  	refLines = refLinesParam,
-#  	outputFile = pathReport
-#  )
-#  
+# 
+# # reference lines input parameter
+# refLinesParam <- list(
+# 	list(
+# 		time = -7,
+# 		label = "Screening 1",
+# 		color = "purple"
+# 	),
+# 	list(
+# 		time = -7,
+# 		label = "Screening 2",
+# 		color = "purple"
+# 	),
+# 	list(
+# 		time = 1,
+# 		label = "Baseline",
+# 		color = "darkblue"
+# 	)
+# )
+# 
+# # create report
+# pathReport <- "subjectProfile_SDTM_referenceLines_custom.pdf"
+# createSubjectProfileReport(
+# 	listPlots = list(
+# 		dmPlots,
+# 		mhPlots,
+# 		cmPlots,
+# 		exPlots,
+# 		aePlots,
+# 		lbLinePlots
+# 	),
+# 	refLines = refLinesParam,
+# 	outputFile = pathReport
+# )
+# 
 
 ## ----createReport-referenceLines-data, eval = FALSE---------------------------
-#  
-#  # create report
-#  pathReport <- "subjectProfile_SDTM_referenceLines_subjectVisit.pdf"
-#  
-#  # only retain screening, baseline and planned visits
-#  dataSV <- subset(dataSDTM$SV, grepl("SCREENING|WEEK|BASELINE", VISIT))
-#  
-#  createSubjectProfileReport(
-#  	listPlots = list(
-#  		dmPlots,
-#  		mhPlots,
-#  		cmPlots,
-#  		exPlots,
-#  		aePlots,
-#  		lbLinePlots
-#  	),
-#  	# reference line(s)
-#  	refLinesData = dataSV,
-#  	refLinesTimeVar = "VISITDY",
-#  	refLinesLabelVar = "VISIT",
-#  	outputFile = pathReport
-#  )
-#  
+# 
+# # create report
+# pathReport <- "subjectProfile_SDTM_referenceLines_subjectVisit.pdf"
+# 
+# # only retain screening, baseline and planned visits
+# dataSV <- subset(dataSDTM$SV, grepl("SCREENING|WEEK|BASELINE", VISIT))
+# 
+# createSubjectProfileReport(
+# 	listPlots = list(
+# 		dmPlots,
+# 		mhPlots,
+# 		cmPlots,
+# 		exPlots,
+# 		aePlots,
+# 		lbLinePlots
+# 	),
+# 	# reference line(s)
+# 	refLinesData = dataSV,
+# 	refLinesTimeVar = "VISITDY",
+# 	refLinesLabelVar = "VISIT",
+# 	outputFile = pathReport
+# )
+# 
 
 ## ----createReport-bookmarks, eval = FALSE-------------------------------------
-#  
-#  # create report
-#  pathReport <- "subjectProfile_SDTM_bookmarks.pdf"
-#  
-#  dataDM <- dataSDTM$DM
-#  # sort arm categories
-#  dataDM$ARM <- factor(dataDM$ARM,
-#  	levels = c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
-#  
-#  createSubjectProfileReport(
-#  	listPlots = list(
-#  		dmPlots,
-#  		mhPlots,
-#  		cmPlots,
-#  		exPlots,
-#  		aePlots,
-#  		lbLinePlots
-#  	),
-#  	subset = c("01-718-1427", "01-704-1445", "01-701-1211"),
-#  	# bookmark(s)
-#  	bookmarkData = dataDM,
-#  	bookmarkVar = c("SEX", "ARM"),
-#  	# sort subjects in the report based on:
-#  	subjectSortData = dataDM,
-#  	subjectSortVar = "ARM",
-#  	outputFile = pathReport
-#  )
-#  
+# 
+# # create report
+# pathReport <- "subjectProfile_SDTM_bookmarks.pdf"
+# 
+# dataDM <- dataSDTM$DM
+# # sort arm categories
+# dataDM$ARM <- factor(dataDM$ARM,
+# 	levels = c("Placebo", "Xanomeline Low Dose", "Xanomeline High Dose"))
+# 
+# createSubjectProfileReport(
+# 	listPlots = list(
+# 		dmPlots,
+# 		mhPlots,
+# 		cmPlots,
+# 		exPlots,
+# 		aePlots,
+# 		lbLinePlots
+# 	),
+# 	subset = c("01-718-1427", "01-704-1445", "01-701-1211"),
+# 	# bookmark(s)
+# 	bookmarkData = dataDM,
+# 	bookmarkVar = c("SEX", "ARM"),
+# 	# sort subjects in the report based on:
+# 	subjectSortData = dataDM,
+# 	subjectSortVar = "ARM",
+# 	outputFile = pathReport
+# )
+# 
 
 ## ----createReport-example-----------------------------------------------------
 
@@ -1046,47 +1046,47 @@ print(lbPlots[[subjectLB]][[1]])
 
 
 ## ----createReport-timeAlign, out.width = "100%", out.height = "700px", eval = FALSE----
-#  
-#  	pathReport <- "subjectProfile_timeAlign-all_timeAlignPerSubject-none.pdf"
-#  	createSubjectProfileReport(
-#  		listPlots = listPlots,
-#  		outputFile = pathReport,
-#  		subset = subsetPatients
-#  	)
-#  	
+# 
+# 	pathReport <- "subjectProfile_timeAlign-all_timeAlignPerSubject-none.pdf"
+# 	createSubjectProfileReport(
+# 		listPlots = listPlots,
+# 		outputFile = pathReport,
+# 		subset = subsetPatients
+# 	)
+# 	
 
 ## ----createReport-timeAlign-domain, out.width = "100%", out.height = "700px", eval = FALSE----
-#  
-#  	pathReport <- "subjectProfile_timeAlign-AE_timeAlignPerSubject-none.pdf"
-#  	createSubjectProfileReport(
-#  		listPlots = listPlots,
-#  		outputFile = pathReport,
-#  		subset = subsetPatients,
-#  		timeAlign = "AE"
-#  	)
-#  	
+# 
+# 	pathReport <- "subjectProfile_timeAlign-AE_timeAlignPerSubject-none.pdf"
+# 	createSubjectProfileReport(
+# 		listPlots = listPlots,
+# 		outputFile = pathReport,
+# 		subset = subsetPatients,
+# 		timeAlign = "AE"
+# 	)
+# 	
 
 ## ----createReport-timeAlign-none, out.width = "100%", out.height = "700px", eval = FALSE----
-#  
-#  	pathReport <- "subjectProfile_timeAlign-none_timeAlignPerSubject-none.pdf"
-#  	createSubjectProfileReport(
-#  		listPlots = listPlots,
-#  		outputFile = pathReport,
-#  		subset = subsetPatients,
-#  		timeAlign = "none"
-#  	)
-#  	
+# 
+# 	pathReport <- "subjectProfile_timeAlign-none_timeAlignPerSubject-none.pdf"
+# 	createSubjectProfileReport(
+# 		listPlots = listPlots,
+# 		outputFile = pathReport,
+# 		subset = subsetPatients,
+# 		timeAlign = "none"
+# 	)
+# 	
 
 ## ----createReport-timeAlign-perSubject, out.width = "100%", out.height = "700px", eval = FALSE----
-#  
-#  	pathReport <- "subjectProfile_timeAlign-all_timeAlignPerSubject-all.pdf"
-#  	createSubjectProfileReport(
-#  		listPlots = listPlots,
-#  		outputFile = pathReport,
-#  		subset = subsetPatients,
-#  		timeAlignPerSubject = "all"
-#  	)
-#  	
+# 
+# 	pathReport <- "subjectProfile_timeAlign-all_timeAlignPerSubject-all.pdf"
+# 	createSubjectProfileReport(
+# 		listPlots = listPlots,
+# 		outputFile = pathReport,
+# 		subset = subsetPatients,
+# 		timeAlignPerSubject = "all"
+# 	)
+# 	
 
 ## ----includeSessionInfo, echo = FALSE-----------------------------------------
 

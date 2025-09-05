@@ -1,8 +1,8 @@
 Package: patientProfilesVis
 Type: Package
 Title: Visualization of Patient Profiles
-Version: 2.0.9
-Date: 2024-06-18
+Version: 2.0.10
+Date: 2025-09-04
 Authors@R: c(
   person(given = "Laure", family = "Cougnaud", 
   role = c("aut", "cre"), email = "laure.cougnaud@openanalytics.eu"), 
@@ -28,14 +28,14 @@ Suggests: pander, shiny, testthat, grDevices, rmarkdown, gtable,
 URL: https://github.com/openanalytics/patientProfilesVis
 BugReports: https://github.com/openanalytics/patientProfilesVis/issues
 License: MIT + file LICENSE
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 SystemRequirements: latex, cairo (for report creation)
 NeedsCompilation: no
-Packaged: 2024-06-18 07:17:56 UTC; root
+Packaged: 2025-09-04 19:53:14 UTC; root
 Author: Laure Cougnaud [aut, cre],
   Margaux Faes [rev] (tests),
   Open Analytics [cph]
 Maintainer: Laure Cougnaud <laure.cougnaud@openanalytics.eu>
 Repository: CRAN
-Date/Publication: 2024-06-18 09:00:02 UTC
+Date/Publication: 2025-09-05 16:00:02 UTC
